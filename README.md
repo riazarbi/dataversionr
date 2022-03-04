@@ -2,7 +2,7 @@
 Create and maintain time-versioned datasets using `arrow`.
 
 ## Status
-The functions work againstboth local and s3 endpoints, and informal tests pass. 
+The functions work against both local and s3 endpoints, and informal tests pass. 
 
 ## TODO
 
