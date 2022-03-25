@@ -27,7 +27,7 @@ retrieve_dataset_diffs <- function(prefix,
       as_tibble
 
   } else {
-    timestamp_filter <- with_tz(timestamp_filter, tzone = "UTC")
+    timestamp_filter <- lubridate::with_tz(timestamp_filter, tzone = "UTC")
     if (verbose) {
       message(paste(
         "Filtering dataset to timestamp",

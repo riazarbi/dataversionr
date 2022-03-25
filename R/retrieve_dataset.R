@@ -29,7 +29,7 @@ retrieve_dataset <- function(prefix,
     }
 
   } else {
-    timestamp_filter <- with_tz(timestamp_filter, tzone = "UTC")
+    timestamp_filter <- lubridate::with_tz(timestamp_filter, tzone = "UTC")
     if (verbose) {
       message(paste(
         "Reconstructing dataset at timestamp",
