@@ -4,7 +4,48 @@ update_dataset <- function(new_df,
                            key_cols = NA,
                            validate_key_cols = TRUE,
                            verbose = FALSE) {
-  
+
+  # Internal function
+  put_diff <- function(df,
+                       prefix,
+                       destination,
+                       operation,
+                       write_timestamp,
+                       verbose = FALSE) {
+
+
+    dataset_prefix <- destination$cd(prefix)
+    make_prefix_path(destination = dataset_prefix$path("history"))
+
+
+    if (nrow(df) > 0) {
+      if (verbose) {
+        message(paste("Operation", operation, "has", nrow(df), "diffs..."))
+      }
+
+      df <- df %>%
+        mutate(timestamp = with_tz(write_timestamp, tzone = "UTC"),
+               operation = operation) %>%
+        select(timestamp, everything(), operation)
+
+      write_parquet(df,
+                    dataset_prefix$OpenOutputStream(
+                      paste0(
+                        "history/",
+                        as.numeric(write_timestamp),
+                        "_",
+                        operation,
+                        ".parquet"
+                      )
+                    ))
+    } else {
+      if (verbose) {
+        message(paste("Operation", operation, "has no diffs..."))
+      }
+    }
+  }
+
+
   dataset_prefix <- destination$cd(prefix)
 
   # Read in the old table
@@ -25,6 +66,10 @@ update_dataset <- function(new_df,
     }
   }
 
+  # WORKAROUND FOR https://issues.apache.org/jira/browse/ARROW-16010
+  new_df <- Table$create(new_df)$to_data_frame()
+  # END WORKAROUND
+
   # Calculate diff tables
   diff_tables <-
     compute_df_diff_tables(new_df, old_df, key_cols = key_cols, verbose = verbose)
@@ -32,7 +77,36 @@ update_dataset <- function(new_df,
   # Count number of changes
   diff_counts <- unlist(lapply(diff_tables, nrow))
   number_of_changes <- sum(diff_counts)
-  
+
+  # Define a little function for use inside this function
+  put_diff <- function(df, dataset_prefix, operation, timestamp, verbose) {
+    if (nrow(df) > 0) {
+      if (verbose) {
+        message(paste("Operation", operation, "has", nrow(df), "diffs..."))
+      }
+
+      df <- df %>%
+        mutate(timestamp = lubridate::with_tz(write_timestamp, tzone = "UTC"),
+               operation = operation) %>%
+        select(timestamp, everything(), operation)
+      write_parquet(df,
+                    dataset_prefix$path(
+                      paste0(
+                        "history/",
+                        as.numeric(write_timestamp),
+                        "_",
+                        operation,
+                        ".parquet"
+                      )
+                    ))
+    } else {
+      if (verbose) {
+        message(paste("Operation", operation, "has no diffs..."))
+      }
+    }
+  }
+
+
   # Actual write operation logic
   # First, just exit if there are no diffs.
   if (number_of_changes == 0) {
@@ -43,17 +117,17 @@ update_dataset <- function(new_df,
     # Create directories if it's a local filesystem
     dataset_paths <- c("history", "latest", "diff_stats")
     for (path in dataset_paths) {
-      make_prefix_path(prefix = paste0(prefix, "/", path),
-                       destination = destination)
+      make_prefix_path(destination = dataset_prefix$path(path))
     }
-    
+
     # Determine a write timestamp
-    write_timestamp <- now()
+    write_timestamp <- lubridate::now()
 
     # Create a full-row composite key if no key has been specified
     if (is.na(key_cols[1])) {
       key_cols <- colnames(new_df)
     }
+
 
     if (verbose) {
       message("Writing diff statistics...")
@@ -95,13 +169,16 @@ update_dataset <- function(new_df,
 
     diff_counts_df <- diff_counts %>% t %>%
       as.data.frame %>%
-      mutate(`timestamp` = as.character(with_tz(write_timestamp, tzone = "UTC")),
+      mutate(`timestamp` = as.character(lubridate::with_tz(write_timestamp, tzone = "UTC")),
              key_cols = paste(key_cols, collapse = "|")) %>%
       rename(create = .data$new_rows,
              update = .data$modified_rows,
              delete = .data$deleted_rows) %>%
       select(.data$timestamp, everything())
 
+    if (verbose) {
+      message("Writing diff stats...")
+    }
     write_csv_arrow(diff_counts_df,
                     dataset_prefix$OpenOutputStream(paste0(
                       "diff_stats/",
@@ -112,9 +189,9 @@ update_dataset <- function(new_df,
     if (verbose) {
       message("Writing diffs...")
     }
-    put_diff(diff_tables$new_rows, prefix, destination, "create", write_timestamp, verbose = verbose)
-    put_diff(diff_tables$modified_rows, prefix, destination, "update", write_timestamp, verbose = verbose)
-    put_diff(diff_tables$deleted_rows, prefix, destination, "delete", write_timestamp, verbose = verbose)
+    put_diff(diff_tables$new_rows, dataset_prefix, "create", write_timestamp, verbose = verbose)
+    put_diff(diff_tables$modified_rows, dataset_prefix, "update", write_timestamp, verbose = verbose)
+    put_diff(diff_tables$deleted_rows, dataset_prefix, "delete", write_timestamp, verbose = verbose)
 
     if (verbose) {
       message("Writing new dataset...")
@@ -124,6 +201,7 @@ update_dataset <- function(new_df,
                       "latest/data-01.parquet"
                     )
                   )
+
     return(TRUE)
   }
 }
