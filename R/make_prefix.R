@@ -1,5 +1,5 @@
-make_prefix_path <- function(destination) {
-  verify_arrow_filesystem(destination)
+make_prefix <- function(destination) {
+    destination <- make_SubTreeFileSystem(destination)
   if (destination$base_fs$type_name == "local") {
     destination$CreateDir("/", recursive = TRUE)
   }

@@ -1,61 +1,84 @@
+# setup ------------------------------------------------------------------------
+local_prefix <- tempfile()
+s3_prefix <- fix_path("prefix", s3dir)
 filename <- "file-test.csv"
 df <- iris
-write.csv(df, filename)
+make_prefix(local_prefix)
+write.csv(df, file.path(local_prefix, filename))
+aws.s3::put_object(file.path(local_prefix, filename),
+                   file.path("prefix", filename),
+                   bucket,
+                   key = "minio",
+                   secret = "password",
+                      base_url = "localhost:9000",
+                      region = "",
+                      use_https = "false")
 
-test_that("put prefix",
+# tests ------------------------------------------------------------------------
+test_that("local verify file exists",
           {expect_true({
-            aws.s3::put_object("file-test.csv",
-                               "prefix/file-test.csv",
-                               bucket,
-                               region = "",
-                               base_url = "127.0.0.1:9000",
-                               use_https = FALSE)
-
+            file.exists(file.path(local_prefix, filename))
           })})
 
-# # REMOVE PREFIX ----
-prefix <- "prefix/"
 
-test_that("remove prefix",
+test_that("local remove prefix",
           {expect_true({
-            remove_prefix(prefix, s3dir)
+            remove_prefix(local_prefix, prompt = FALSE)
             })})
 
-test_that("verify object doesn't exist",
+test_that("local verify object doesn't exist",
           {expect_false({
-
-                        aws.s3::object_exists(paste0(prefix, filename),
-                                  bucket,
-                                  region = "",
-                                  base_url = "127.0.0.1:9000",
-                                  use_https = FALSE)
-
-          },
-          "Client error: (404) Not Found")}
+            file.exists(file.path(local_prefix,  filename))
+          })}
 )
 
-
-
-test_that("remove root prefix fails",
+test_that("local remove root filesystem fails",
           {expect_error(
-            remove_prefix("", s3dir),
-            'Prefix is not allowed to be "". That would wipe the root of the bucket or directory!'
+            remove_prefix(LocalFileSystem$create()),
+            'destination parameter must be a string or SubTreeFileSystem'
             )}
 )
 
-test_that("remove root prefix fails",
+test_that("s3 verify file exists",
+          {expect_true({
+            aws.s3::object_exists(
+                               file.path("prefix", filename),
+                               bucket,
+                               key = "minio",
+                               secret = "password",
+                               base_url = "localhost:9000",
+                               region = "",
+                               use_https = "false")
+          })})
+
+
+test_that("s3 remove prefix",
+          {expect_true({
+            remove_prefix(destination = s3_prefix, prompt = FALSE)
+          })})
+
+test_that("s3 verify file does not exist",
+          {expect_false({
+            aws.s3::object_exists(
+              file.path("prefix", filename),
+              bucket,
+              key = "minio",
+              secret = "password",
+              base_url = "localhost:9000",
+              region = "",
+              use_https = "false")
+          })})
+
+
+test_that("s3 remove root filesystem fails",
           {expect_error(
-            remove_prefix("/", s3dir),
-            'Prefix is not allowed to be "". That would wipe the root of the bucket or directory!'
+            remove_prefix(s3dir),
+            'Deleting buckets not supported.'
           )}
 )
 
-test_that("root s3 fs fails fails",
-          {expect_error(
-            remove_prefix(prefix, s3)
-          )}
-)
-
-
-withr::defer(unlink(filename))
-
+# teardown ---------------------------------------------------------------------
+withr::defer({
+  unlink(local_prefix);
+  s3$DeleteDirContents("dataversionr-tests/")
+})
