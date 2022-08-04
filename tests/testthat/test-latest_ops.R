@@ -1,6 +1,14 @@
 # setup ------------------------------------------------------------------------
 local_prefix <- tempfile()
 
+# Create sample dataframe
+numbers <- 1:6
+letters2 <- c("s", "j", "f", "u", "l", "i")
+
+new_df <- data.frame(a = numbers[2:6], b = letters2[2:6])
+new_df[3, 2] <- "update"
+
+
 # tests ------------------------------------------------------------------------
 test_that("local get latest",
           {expect_error({
