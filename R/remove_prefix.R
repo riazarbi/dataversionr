@@ -8,7 +8,7 @@ remove_prefix <- function(destination, prompt = TRUE) {
 
   prefix_depth <- length(strsplit(destination$base_path, split = "/")[[1]])
 
-  if (s3dir$base_fs$type_name == "s3" & prefix_depth == 1) {
+  if (destination$base_fs$type_name == "s3" & prefix_depth == 1) {
     stop('Deleting buckets not supported.')
   }
 
