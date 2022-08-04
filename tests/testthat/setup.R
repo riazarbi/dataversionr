@@ -1,4 +1,4 @@
-# Set up minio for s3 testing ##################################################
+# # Set up minio for s3 testing ##################################################
 Sys.setenv(
   MINIO_ROOT_USER = "minio",
   MINIO_ROOT_PASSWORD = "password",
@@ -66,12 +66,6 @@ s3 <- arrow::S3FileSystem$create(
 
 s3dir <- s3$cd(bucket)
 
-# Create file dir
-fs_data_dir <- "/tmp/dataversionr-tests"
-fs <- arrow::LocalFileSystem$create()
-fsdir <- fs$cd(fs_data_dir)
-make_prefix_path(fsdir)
-
 # Tear down minio after testing ################################################
 withr::defer({
   while (is.na(sys::exec_status(minio_process, wait = FALSE))) {
@@ -81,8 +75,7 @@ withr::defer({
 
 
 withr::defer({
-  unlink(minio_data_dir, recursive = TRUE);
-  unlink(fs_data_dir, recursive = TRUE)
+  unlink(minio_data_dir, recursive = TRUE)
   }, teardown_env())
 
 
@@ -94,22 +87,24 @@ withr::defer({
   }, teardown_env())
 
 
+#
+# aws.s3::bucketlist(
+#            key = "minio",
+#            secret = "password",
+#            base_url = "localhost:9000",
+#            region = "",
+#            use_https = "false"
+# )
+#
+# View(aws.s3::get_bucket_df(
+#   bucket,
+#   key = "minio",
+#   secret = "password",
+#   base_url = "localhost:9000",
+#   region = "",
+#   use_https = "false"
+# ))
+#
+# remove_prefix(s3$cd("dataversionr-tests/"), prompt = FALSE)
+# s3$DeleteDirContents("dataversionr-tests/")
 
-aws.s3::bucketlist(
-           key = "minio",
-           secret = "password",
-           base_url = "localhost:9000",
-           region = "",
-           use_https = "false"
-)
-
-View(aws.s3::get_bucket_df(
-  bucket,
-  key = "minio",
-  secret = "password",
-  base_url = "localhost:9000",
-  region = "",
-  use_https = "false"
-))
-
-remove_prefix("dataversionr-tests", s3dir)
