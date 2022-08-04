@@ -1,8 +1,8 @@
 get_diffs <- function(destination, collect = TRUE) {
   destination <- make_SubTreeFileSystem(destination)
-  ds <- open_dataset(destination$path("diff"))
+  ds <- arrow::open_dataset(destination$path("diff"))
   if(collect) {
-    collect(ds)
+    dplyr::collect(ds)
   } else {
     ds
   }

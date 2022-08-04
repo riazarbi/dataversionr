@@ -3,10 +3,10 @@ get_latest <- function(destination, collect = TRUE) {
   latest_prefix <- fix_path("latest", destination)
 
 
-  ds <- open_dataset(latest_prefix)
+  ds <- arrow::open_dataset(latest_prefix)
 
   if(collect) {
-    ds <- collect(ds)
+    ds <- dplyr::collect(ds)
   }
 
   return(ds)

@@ -1,4 +1,11 @@
+library(dplyr)
+library(tidyr)
+library(arrow)
+library(lubridate)
+
 # # Set up minio for s3 testing ##################################################
+Sys.setenv(TZ = "UTC")
+
 Sys.setenv(
   MINIO_ROOT_USER = "minio",
   MINIO_ROOT_PASSWORD = "password",

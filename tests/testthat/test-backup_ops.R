@@ -19,7 +19,7 @@ test_that("local put backup",
 
 test_that("local get backup",
           {expect_equal({
-            get_backups(local_prefix) %>% select(-backup_timestamp)
+            get_backups(local_prefix) %>% dplyr::select(-backup_timestamp)
           }, new_df)})
 
 

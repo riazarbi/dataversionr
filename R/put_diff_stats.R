@@ -6,6 +6,6 @@ put_diff_stats <- function(destination) {
 
   put_location <- fix_path("diff_stats.csv", destination)
 
-  write_csv_arrow(diff_counts_df, put_location)
+  arrow::write_csv_arrow(diff_counts_df, put_location)
   return(TRUE)
 }

@@ -20,7 +20,7 @@ retrieve_dv_backup <- function(destination, as_of) {
     stop("No backups found in the backup directory. ")
   }
 
-  ordered_backups <- sort(map_chr(backup_files, ~tools::file_path_sans_ext(.x)), decreasing = TRUE)
+  ordered_backups <- sort(purrr::map_chr(backup_files, ~tools::file_path_sans_ext(.x)), decreasing = TRUE)
 
   ordered_backups_dttm <- lubridate::as_datetime(as.numeric(ordered_backups))
 
@@ -34,7 +34,7 @@ retrieve_dv_backup <- function(destination, as_of) {
 
   get_path <- fix_path(latest_backup_name, backup_prefix)
 
-  dv <- read_parquet(get_path)
+  dv <- arrow::read_parquet(get_path)
 
   return(dv)
 

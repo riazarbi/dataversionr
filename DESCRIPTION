@@ -8,22 +8,21 @@ Authors@R:
            email = "first.last@example.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
-Depends:
-    aws.s3,
+RoxygenNote: 7.2.1
+Imports:
+    arrow,
     dplyr,
-    janitor,
-    jsonlite,
     lubridate,
     purrr,
-    rlang,
-    tibble,
-    arrow
+    diffdfs,
+    tidyr
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr,
+    sys,
+    aws.s3
 Config/testthat/edition: 3

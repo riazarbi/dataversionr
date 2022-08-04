@@ -10,9 +10,9 @@ put_backup <- function(new_df, destination) {
 
   put_location <- fix_path(file_path, latest_prefix)
 
-  backup_df <- mutate(new_df, backup_timestamp = timestamp)
+  backup_df <- dplyr::mutate(new_df, backup_timestamp = timestamp)
 
-  write_parquet(backup_df,
+  arrow::write_parquet(backup_df,
                 put_location)
   return(TRUE)
 }

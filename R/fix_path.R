@@ -4,8 +4,6 @@ fix_path <- function(path,
 
     destination <- make_SubTreeFileSystem(destination, verbose = verbose)
 
-    destination$base_path
-
     base_fs <- destination$base_fs
     base_path <- destination$base_path
     put_path <- file.path(base_path, path, fsep = )

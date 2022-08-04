@@ -6,7 +6,7 @@ put_latest <- function(new_df, destination) {
 
   put_location <- fix_path("data.parquet", latest_prefix)
 
-  write_parquet(new_df,
+  arrow::write_parquet(new_df,
                 put_location)
   return(TRUE)
 }

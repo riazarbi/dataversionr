@@ -16,7 +16,7 @@ remove_prefix <- function(destination, prompt = TRUE) {
     msg <- paste0("This command will delete ",
                  destination$base_path,
                  ".\nContinue?\n")
-    proceed <- askYesNo(msg, default = FALSE,
+    proceed <- utils::askYesNo(msg, default = FALSE,
              prompts = getOption("askYesNo", gettext(c("Y", "N", "Cancel"))))
   } else {
     proceed <- TRUE

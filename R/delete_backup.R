@@ -7,7 +7,7 @@ delete_backup <- function(destination, after_position, verbose = FALSE) {
   prefix_path <- make_SubTreeFileSystem(prefix_path, verbose = verbose)
 
   backup_files <- prefix_path$ls()
-  ordered_backups <- sort(map_chr(backup_files, ~tools::file_path_sans_ext(.x)), decreasing = TRUE)
+  ordered_backups <- sort(purrr::map_chr(backup_files, ~tools::file_path_sans_ext(.x)), decreasing = TRUE)
   num_ordered_backups <- length(ordered_backups)
   start_flag <- after_position + 1
   if(start_flag > num_ordered_backups) {

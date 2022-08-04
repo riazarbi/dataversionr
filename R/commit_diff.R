@@ -8,9 +8,8 @@ commit_diff <- function(diff_df,
 
   diff_path <- paste0("diff/", as.numeric(timestamp), ".parquet")
 
-  diff_df <- diff_df %>%
-    dplyr::mutate(diff_timestamp = timestamp) %>%
-    dplyr::select(diff_timestamp, everything())
+  diff_df$diff_timestamp <- timestamp
+  diff_df <- dplyr::select(diff_df, .data$diff_timestamp, dplyr::everything())
 
 
   if (verbose) {
@@ -22,14 +21,14 @@ commit_diff <- function(diff_df,
 
   put_location <- fix_path(diff_path, destination)
 
-  write_parquet(diff_df,
+  arrow::write_parquet(diff_df,
                 put_location)
 
   if (verbose) {
     message("Verifying diff can be retrieved from dataset...")
   }
 
-  retrieved_df <- read_parquet(put_location)
+  retrieved_df <- arrow::read_parquet(put_location)
 
   if (verbose) {
     message("A parquet file can be read from the target path...")
@@ -37,7 +36,7 @@ commit_diff <- function(diff_df,
 
   # Table$() method is WORKAROUND FOR https://issues.apache.org/jira/browse/ARROW-16010
   read_check <-
-    all(retrieved_df == Table$create(diff_df)$to_data_frame())
+    all(retrieved_df == arrow::Table$create(diff_df)$to_data_frame())
   if (verbose & read_check) {
     message("Remote diff is identical to local diff.")
   }

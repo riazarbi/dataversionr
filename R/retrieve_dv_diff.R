@@ -12,10 +12,8 @@ retrieve_dv_diff <- function(destination, as_of, key_cols) {
   }
 
   diff_ds <- get_diffs(destination, collect = FALSE)
-  diff_ds_filtered <- filter(diff_ds, .data$diff_timestamp <= as_of) %>%
-    arrange(.data$diff_timestamp) %>% collect()
-
-
+  diff_ds_filtered <- dplyr::filter(diff_ds, .data$diff_timestamp <= as_of) %>%
+    dplyr::arrange(.data$diff_timestamp) %>% dplyr::collect()
 
   if(nrow(diff_ds_filtered) == 0) {
     stop("No diffs older than the specified as_of date found.")
@@ -23,11 +21,11 @@ retrieve_dv_diff <- function(destination, as_of, key_cols) {
 
 
   dv <- diff_ds_filtered %>%
-    group_by(across(all_of(c(key_cols)))) %>%
-    summarise(across(everything(), last), .groups = "keep") %>%
-    ungroup() %>%
-    filter(.data$operation != "deleted") %>%
-    select(-.data$diff_timestamp,-.data$operation) %>%
+    dplyr::group_by(dplyr::across(dplyr::all_of(c(key_cols)))) %>%
+    dplyr::summarise(dplyr::across(dplyr::everything(), dplyr::last), .groups = "keep") %>%
+    dplyr::ungroup() %>%
+    dplyr::filter(.data$operation != "deleted") %>%
+    dplyr::select(-.data$diff_timestamp,-.data$operation) %>%
     as.data.frame
 
   return(dv)
