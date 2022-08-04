@@ -32,7 +32,7 @@ retrieve_dv_backup <- function(destination, as_of) {
 
   latest_backup_name <- paste0(older_backups[1], ".parquet")
 
-  get_path <- fix_path(latest_backup_name, backup_prefix, verbose = verbose)
+  get_path <- fix_path(latest_backup_name, backup_prefix)
 
   dv <- read_parquet(get_path)
 
