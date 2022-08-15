@@ -14,7 +14,7 @@ generate_metadata <- function(df,
     stop("parameter df is not a dataframe.")
   }
 
-  if(any(is.na(key_cols))) {
+  if(all(is.na(key_cols))) {
     key_cols <- colnames(df)
   }
 
