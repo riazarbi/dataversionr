@@ -70,15 +70,22 @@ test_that("s3 verify file does not exist",
           })})
 
 
-test_that("s3 remove root filesystem fails",
-          {expect_error(
-            remove_prefix(s3dir),
-            'Deleting buckets not supported.'
+test_that("s3 remove bucket contents ",
+          {expect_true(
+            remove_prefix(s3dir, prompt = FALSE)
           )}
 )
 
+
+test_that("s3 bucket remove_prefix worked",
+          {expect_equal({
+            s3dir$ls()
+          },
+          character(0)
+          )})
+
 # teardown ---------------------------------------------------------------------
 withr::defer({
-  unlink(local_prefix);
+  unlink(local_prefix, recursive = TRUE);
   s3$DeleteDirContents("dataversionr-tests/")
 })

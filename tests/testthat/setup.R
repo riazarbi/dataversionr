@@ -73,6 +73,7 @@ s3 <- arrow::S3FileSystem$create(
 
 s3dir <- s3$cd(bucket)
 
+
 # Tear down minio after testing ################################################
 withr::defer({
   while (is.na(sys::exec_status(minio_process, wait = FALSE))) {
@@ -92,26 +93,3 @@ withr::defer({
                             "AWS_ACCESS_KEY_ID",
                             "AWS_SECRET_ACCESS_KEY"))
   }, teardown_env())
-
-
-#
-# aws.s3::bucketlist(
-#            key = "minio",
-#            secret = "password",
-#            base_url = "localhost:9000",
-#            region = "",
-#            use_https = "false"
-# )
-#
-# View(aws.s3::get_bucket_df(
-#   bucket,
-#   key = "minio",
-#   secret = "password",
-#   base_url = "localhost:9000",
-#   region = "",
-#   use_https = "false"
-# ))
-#
-# remove_prefix(s3$cd("dataversionr-tests/"), prompt = FALSE)
-# s3$DeleteDirContents("dataversionr-tests/")
-

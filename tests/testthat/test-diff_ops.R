@@ -82,45 +82,45 @@ test_that("local get_diff_stats", {
   expect_equal(get_diff_stats(local_prefix) %>% select(-diff_timestamp) %>% arrange(new),
                data.frame(new = c(2L,5L), deleted = c(2L,NA), modified = c(0L,0L)))})
 
-# retrieve_dv_diff
+# read_dv_diff
 # let some time elapse
 Sys.sleep(60)
 
-# retrieve_dv_diff s3
+# read_dv_diff s3
 as_of <- lubridate::now() - seconds(30)
 commit_diff(newer_diff_df,
             s3dir)
 
 test_that("s3 retrieve_dv_backup",
           {expect_equal({
-            retrieve_dv_diff(s3dir, as_of = as_of, key_cols = c("a", "b")) %>% arrange(a) },
+            read_dv_diff(s3dir, as_of = as_of, key_cols = c("a", "b")) %>% arrange(a) },
             new_df)})
 
 test_that("retrieve_dv_backup too far back",
           {expect_error({
-            retrieve_dv_diff(s3dir, as_of = lubridate::now() - hours(30))},
+            read_dv_diff(s3dir, as_of = lubridate::now() - hours(30))},
             "No diffs older")})
 
-# retrieve_dv_diff local
+# read_dv_diff local
 as_of <- lubridate::now() - seconds(30)
 commit_diff(newer_diff_df,
             local_prefix)
 
 test_that("local retrieve_dv_backup",
           {expect_equal({
-            retrieve_dv_diff(local_prefix, as_of = as_of, key_cols = c("a", "b")) %>% arrange(a) },
+            read_dv_diff(local_prefix, as_of = as_of, key_cols = c("a", "b")) %>% arrange(a) },
             new_df)})
 
 test_that("retrieve_dv_backup too far back",
           {expect_error({
-            retrieve_dv_diff(local_prefix, as_of = lubridate::now() - hours(30))},
+            read_dv_diff(local_prefix, as_of = lubridate::now() - hours(30))},
             "No diffs older")})
 
 
 
 # teardown ---------------------------------------------------------------------
 withr::defer({
-  unlink(local_prefix);
+  unlink(local_prefix, recursive = TRUE);
   s3$DeleteDirContents("dataversionr-tests/")
 })
 

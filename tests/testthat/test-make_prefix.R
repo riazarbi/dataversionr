@@ -34,7 +34,6 @@ test_that("s3 root make_prefix",
 
 # teardown ---------------------------------------------------------------------
 withr::defer({
-  unlink(local_prefix);
+  unlink(local_prefix, recursive = TRUE);
   s3$DeleteDirContents("dataversionr-tests/")
-  })
-
+})

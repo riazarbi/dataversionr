@@ -169,6 +169,6 @@ test_that("get_metadata s3",
 
 # teardown ---------------------------------------------------------------------
 withr::defer({
-  unlink(local_prefix);
+  unlink(local_prefix, recursive = TRUE);
   s3$DeleteDirContents("dataversionr-tests/")
 })
