@@ -1,6 +1,6 @@
 
 
-retrieve_dv_diff <- function(destination, as_of, key_cols) {
+read_dv_diff <- function(destination, as_of, key_cols) {
   if(is.na(as_of)) {
     as_of <- lubridate::now()
   }

@@ -1,6 +1,6 @@
 
 
-retrieve_dv_backup <- function(destination, as_of) {
+read_dv_backup <- function(destination, as_of) {
   if(is.na(as_of)) {
     as_of <- lubridate::now()
   }
@@ -34,7 +34,7 @@ retrieve_dv_backup <- function(destination, as_of) {
 
   get_path <- fix_path(latest_backup_name, backup_prefix)
 
-  dv <- arrow::read_parquet(get_path)
+  dv <- dplyr::select(arrow::read_parquet(get_path), -backup_timestamp)
 
   return(dv)
 
