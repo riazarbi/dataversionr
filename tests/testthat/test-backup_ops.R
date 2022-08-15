@@ -24,6 +24,7 @@ test_that("local get backup",
           }, old_df)})
 
 
+if(Sys.getenv("TEST_S3") == "TRUE") {
 test_that("s3 get backup",
           {expect_error({
             get_backups(s3dir)
@@ -56,7 +57,7 @@ test_that("s3 delete backup verify",
           {expect_equal({sort(prior_backups, decreasing = TRUE)[1:4]},
                         sort(s3_post_backups, decreasing = TRUE))})
 
-
+}
 # delete backups local
 for(i in seq_along(1:10)) {put_backup(old_df, local_prefix)}
 
@@ -82,6 +83,7 @@ test_that("local_prefix delete backup verify",
 Sys.sleep(60)
 
 # retrieve_backup s3
+if(Sys.getenv("TEST_S3") == "TRUE") {
 old_backups <- s3dir$cd("backup")$ls()
 
 for(i in seq_along(1:10)) {put_backup(new_df, s3dir)}
@@ -95,7 +97,7 @@ test_that("read_dv_backup too far back",
           {expect_error({
             read_dv_backup(s3dir, as_of = lubridate::now() - hours(30)) },
             "No backups older")})
-
+}
 
 # retrieve_backup local
 old_backups <- prefix_path$ls()
@@ -112,7 +114,10 @@ test_that("local read_dv_backup",
 # teardown ---------------------------------------------------------------------
 withr::defer({
   unlink(local_prefix, recursive = TRUE);
+  if(Sys.getenv("TEST_S3") == "TRUE") {
+
   s3$DeleteDirContents("dataversionr-tests/")
+  }
 })
 
 

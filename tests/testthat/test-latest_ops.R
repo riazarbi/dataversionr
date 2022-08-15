@@ -25,6 +25,7 @@ test_that("local get latest",
             get_latest(local_prefix)
           }, new_df)})
 
+if(Sys.getenv("TEST_S3") == "TRUE") {
 test_that("s3 get latest",
           {expect_error({
             get_latest(s3dir)
@@ -40,9 +41,11 @@ test_that("s3 get latest",
           {expect_equal({
             get_latest(s3dir)
           }, new_df)})
-
+}
 # teardown ---------------------------------------------------------------------
 withr::defer({
   unlink(local_prefix, recursive = TRUE);
+  if(Sys.getenv("TEST_S3") == "TRUE") {
   s3$DeleteDirContents("dataversionr-tests/")
+  }
 })

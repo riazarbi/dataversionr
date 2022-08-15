@@ -1,10 +1,13 @@
 # setup ------------------------------------------------------------------------
 local_prefix <- tempfile()
+if(Sys.getenv("TEST_S3") == "TRUE") {
 s3_prefix <- fix_path("prefix", s3dir)
+}
 filename <- "file-test.csv"
 df <- iris
 make_prefix(local_prefix)
 write.csv(df, file.path(local_prefix, filename))
+if(Sys.getenv("TEST_S3") == "TRUE") {
 aws.s3::put_object(file.path(local_prefix, filename),
                    file.path("prefix", filename),
                    bucket,
@@ -13,6 +16,7 @@ aws.s3::put_object(file.path(local_prefix, filename),
                       base_url = "localhost:9000",
                       region = "",
                       use_https = "false")
+}
 
 # tests ------------------------------------------------------------------------
 test_that("local verify file exists",
@@ -39,6 +43,7 @@ test_that("local remove root filesystem fails",
             )}
 )
 
+if(Sys.getenv("TEST_S3") == "TRUE") {
 test_that("s3 verify file exists",
           {expect_true({
             aws.s3::object_exists(
@@ -83,9 +88,11 @@ test_that("s3 bucket remove_prefix worked",
           },
           character(0)
           )})
-
+}
 # teardown ---------------------------------------------------------------------
 withr::defer({
   unlink(local_prefix, recursive = TRUE);
+  if(Sys.getenv("TEST_S3") == "TRUE") {
   s3$DeleteDirContents("dataversionr-tests/")
+  }
 })

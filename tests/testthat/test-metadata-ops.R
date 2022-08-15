@@ -3,7 +3,14 @@ local_prefix <- tempfile()
 
 correct_metadata <- list()
 correct_metadata$schema_ver <- "20220727"
+if(Sys.getenv("TEST_S3") == "TRUE") {
+
 correct_metadata$base_path <- s3dir$base_path
+} else {
+  # test local generate_metadata
+  correct_metadata$base_path <- make_SubTreeFileSystem(local_prefix)$base_path
+
+}
 correct_metadata$key_cols <- c("a", "b")
 correct_metadata$diffed <- TRUE
 correct_metadata$backup_count <- 4L
@@ -17,6 +24,7 @@ new_df[3, 2] <- "update"
 
 # tests ------------------------------------------------------------------------
 # test s3 generate_metadata
+if(Sys.getenv("TEST_S3") == "TRUE") {
 test_that("s3 generate_metadata",
           {expect_equal({
             generate_metadata(new_df,
@@ -28,7 +36,7 @@ test_that("s3 generate_metadata",
             correct_metadata
           )})
 
-
+}
 # test local generate_metadata
 correct_metadata$base_path <- make_SubTreeFileSystem(local_prefix)$base_path
 
@@ -123,6 +131,7 @@ test_that("bad diffed param",
           )})
 
 # put_metadata s3
+if(Sys.getenv("TEST_S3") == "TRUE") {
 s3meta <- generate_metadata(new_df,
                   s3dir,
                   key_cols = c("a", "b"),
@@ -134,7 +143,7 @@ test_that("put_metadata s3",
             put_metadata(s3meta, s3dir, verbose = TRUE)
           }
           )})
-
+}
 
 # put_metadata local
 local_meta <- generate_metadata(new_df,
@@ -150,16 +159,17 @@ test_that("put_metadata local",
           )})
 
 # get metadata s3
+if(Sys.getenv("TEST_S3") == "TRUE") {
 test_that("get_metadata s3",
           {expect_equal({
             get_metadata(s3dir, verbose = TRUE)
           },
           s3meta
           )})
-
+}
 
 # get metadata local
-test_that("get_metadata s3",
+test_that("get_metadata local",
           {expect_equal({
             get_metadata(local_prefix, verbose = TRUE)
           },
@@ -170,5 +180,7 @@ test_that("get_metadata s3",
 # teardown ---------------------------------------------------------------------
 withr::defer({
   unlink(local_prefix, recursive = TRUE);
+  if(Sys.getenv("TEST_S3") == "TRUE") {
   s3$DeleteDirContents("dataversionr-tests/")
+  }
 })

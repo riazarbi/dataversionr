@@ -11,17 +11,20 @@ newer_diff_df <- diffdfs::diffdfs(newer_df, new_df, key_cols = c("a", "b"))
 # Clean out prefixes
 local_prefix <- "/tmp/dataversionr-tests/"
 unlink(local_prefix, recursive = TRUE)
+if(Sys.getenv("TEST_S3") == "TRUE") {
 s3$DeleteDirContents("dataversionr-tests/")
-
+}
 
 
 # tests ------------------------------------------------------------------------
 # commit_diff diff 1
+if(Sys.getenv("TEST_S3") == "TRUE") {
 test_that("s3 commit diff works",
           {expect_true(
             commit_diff(first_diff,
             s3dir,
             verbose = TRUE))})
+}
 
 test_that("local commit diff works",
           {expect_true(
@@ -30,11 +33,13 @@ test_that("local commit diff works",
                         verbose = TRUE))})
 
 # commit_diff diff 2
+if(Sys.getenv("TEST_S3") == "TRUE") {
 test_that("s3 commit diff works",
           {expect_true(
             commit_diff(diff_df,
                         s3dir,
                         verbose = TRUE))})
+}
 
 test_that("local commit diff works",
           {expect_true(
@@ -44,9 +49,11 @@ test_that("local commit diff works",
 
 
 # get_diffs
+if(Sys.getenv("TEST_S3") == "TRUE") {
 test_that("s3 retrieve diff works", {
 expect_equal(get_diffs(s3dir) %>% filter(diff_timestamp ==max(diff_timestamp)) %>% select(-diff_timestamp),
              diff_df)})
+}
 
 test_that("local retrieve diff works",{
 expect_equal(get_diffs(local_prefix)  %>% filter(diff_timestamp ==max(diff_timestamp)) %>% select(-diff_timestamp),
@@ -54,11 +61,13 @@ expect_equal(get_diffs(local_prefix)  %>% filter(diff_timestamp ==max(diff_times
 
 
 # summarise_diff
+if(Sys.getenv("TEST_S3") == "TRUE") {
 test_that("s3 summarise_diff ",{
   expect_equal(summarise_diff(s3dir)  %>% select(-diff_timestamp) %>% arrange(new),
                data.frame(new = c(2L, 5L),
                           deleted = c(2L, NA),
                           modified = c(0L, 0L)))})
+}
 
 test_that("local summarise_diff ",{
   expect_equal(summarise_diff(local_prefix) %>% select(-diff_timestamp) %>% arrange(new),
@@ -67,16 +76,20 @@ test_that("local summarise_diff ",{
                           modified = c(0L, 0L)))})
 
 # put_diff_stats
+if(Sys.getenv("TEST_S3") == "TRUE") {
 test_that("s3 put_diff_stats ",{
   expect_true(put_diff_stats(s3dir))})
+}
 
 test_that("local put_diff_stats ",{
   expect_true(put_diff_stats(local_prefix))})
 
 # get_diff_stats
+if(Sys.getenv("TEST_S3") == "TRUE") {
 test_that("s3 get_diff_stats", {
 expect_equal(get_diff_stats(s3dir) %>% select(-diff_timestamp) %>% arrange(new),
             data.frame(new = c(2L,5L), deleted = c(2L,NA), modified = c(0L,0L)))})
+}
 
 test_that("local get_diff_stats", {
   expect_equal(get_diff_stats(local_prefix) %>% select(-diff_timestamp) %>% arrange(new),
@@ -87,6 +100,7 @@ test_that("local get_diff_stats", {
 Sys.sleep(60)
 
 # read_dv_diff s3
+if(Sys.getenv("TEST_S3") == "TRUE") {
 as_of <- lubridate::now() - seconds(30)
 commit_diff(newer_diff_df,
             s3dir)
@@ -100,6 +114,7 @@ test_that("retrieve_dv_backup too far back",
           {expect_error({
             read_dv_diff(s3dir, as_of = lubridate::now() - hours(30))},
             "No diffs older")})
+}
 
 # read_dv_diff local
 as_of <- lubridate::now() - seconds(30)
@@ -121,6 +136,8 @@ test_that("retrieve_dv_backup too far back",
 # teardown ---------------------------------------------------------------------
 withr::defer({
   unlink(local_prefix, recursive = TRUE);
+  if(Sys.getenv("TEST_S3") == "TRUE") {
   s3$DeleteDirContents("dataversionr-tests/")
+  }
 })
 

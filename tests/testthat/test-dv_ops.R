@@ -19,12 +19,15 @@ rownames(new_df) <- c()
 newer_df <- all_df[10:15,]
 rownames(newer_df) <- c()
 
+local_prefix <- tempfile()
 
 # tests ------------------------------------------------------------------------
+if(Sys.getenv("TEST_S3") == "TRUE") {
 test_that("s3dir create_dv",
           {expect_true({
             create_dv(old_df, s3dir, key_cols = c("key1", "key2"), diffed = TRUE, backup_count = 4L)
           })})
+}
 
 test_that("local create_dv",
           {expect_true({
@@ -39,10 +42,12 @@ test_that("overwrite create_dv fails",
 
 old_ts <- lubridate::now()
 
+if(Sys.getenv("TEST_S3") == "TRUE") {
 test_that("s3 update_dv",
           {expect_true({
             update_dv(new_df, s3dir)
           })})
+}
 
 test_that("local update_dv",
           {expect_true({
@@ -52,10 +57,13 @@ test_that("local update_dv",
 
 new_ts <- lubridate::now()
 
+if(Sys.getenv("TEST_S3") == "TRUE") {
+
 test_that("s3 update_dv again",
           {expect_true({
             update_dv(newer_df, s3dir)
           })})
+}
 
 test_that("local update_dv again",
           {expect_true({
@@ -66,7 +74,8 @@ newer_ts <- lubridate::now()
 
 test_that("local read_dv",
           {expect_equal({
-            read_dv(destination)          },
+            read_dv(local_prefix)
+            },
           newer_df
           )})
 
@@ -98,11 +107,13 @@ test_that("local destroy_dv",
             destroy_dv(local_prefix, prompt = FALSE)
           })})
 
+if(Sys.getenv("TEST_S3") == "TRUE") {
+
 test_that("s3 destroy_dv",
           {expect_true({
             destroy_dv(s3dir, prompt = FALSE)
           })})
-
+}
 
 test_that("local destroy_dv worked",
           {expect_equal({
@@ -111,15 +122,19 @@ test_that("local destroy_dv worked",
           character(0)
           )})
 
+if(Sys.getenv("TEST_S3") == "TRUE") {
+
 test_that("s3 destroy_dv worked",
           {expect_equal({
             s3dir$ls()
           },
           character(0)
           )})
-
+}
 # teardown ---------------------------------------------------------------------
 withr::defer({
   unlink(local_prefix, recursive = TRUE);
+  if(Sys.getenv("TEST_S3") == "TRUE") {
   s3$DeleteDirContents("dataversionr-tests/")
+  }
 })
