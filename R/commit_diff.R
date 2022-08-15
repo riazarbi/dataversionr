@@ -36,7 +36,7 @@ commit_diff <- function(diff_df,
 
   # Table$() method is WORKAROUND FOR https://issues.apache.org/jira/browse/ARROW-16010
   read_check <-
-    all(retrieved_df == arrow::Table$create(diff_df)$to_data_frame())
+    identical(dplyr::as_tibble(retrieved_df), arrow::Table$create(diff_df)$to_data_frame())
   if (verbose & read_check) {
     message("Remote diff is identical to local diff.")
   }
