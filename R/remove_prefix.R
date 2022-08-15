@@ -8,22 +8,23 @@ remove_prefix <- function(destination, prompt = TRUE) {
 
   prefix_depth <- length(strsplit(destination$base_path, split = "/")[[1]])
 
-  if (destination$base_fs$type_name == "s3" & prefix_depth == 1) {
-    stop('Deleting buckets not supported.')
-  }
-
   if(prompt) {
     msg <- paste0("This command will delete ",
-                 destination$base_path,
-                 ".\nContinue?\n")
-    proceed <- utils::askYesNo(msg, default = FALSE,
-             prompts = getOption("askYesNo", gettext(c("Y", "N", "Cancel"))))
+                 destination$base_path)
+    message(msg)
+    proceed <- utils::askYesNo("Continue?", default = FALSE,
+             prompts = gettext(c("y", "N", "cancel")))
   } else {
     proceed <- TRUE
   }
 
   if(proceed) {
-    destination$DeleteDir("/")
+    if (destination$base_fs$type_name == "s3" & prefix_depth == 1) {
+      destination$base_fs$DeleteDirContents(destination$base_path)
+    } else {
+      destination$DeleteDir("/")
+    }
+
     return(TRUE)
   } else {
     return(FALSE)
