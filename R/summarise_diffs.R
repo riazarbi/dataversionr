@@ -1,4 +1,4 @@
-#' Summarise diff
+#' Summarise diffs
 #'
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #'
@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-summarise_diff <- function(destination) {
+summarise_diffs <- function(destination) {
 
   destination <- make_SubTreeFileSystem(destination)
 
