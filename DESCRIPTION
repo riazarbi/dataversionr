@@ -2,11 +2,10 @@ Package: dataversionr
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Riaz",
+           family = "Arbi",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           email = "dataversionr@arbidata.com")
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -19,7 +18,9 @@ Imports:
     lubridate,
     purrr,
     diffdfs,
-    tidyr
+    tidyr,
+    magrittr,
+    rlang
 Suggests: 
     testthat (>= 3.0.0),
     withr,
