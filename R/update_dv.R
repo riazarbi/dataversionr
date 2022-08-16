@@ -15,8 +15,15 @@ update_dv <- function(df, destination) {
 
   if(metadata$diffed) {
     diff <- diffdfs::diffdfs(df, get_latest(destination), key_cols)
-    commit_diff(diff, destination)
   }
+
+  if(nrow(diff) > 0) {
+    commit_diff(diff, destination)
+  } else {
+    message("No changes detected. Exiting.")
+    return(FALSE)
+  }
+
 
   if(metadata$backup_count > 0L) {
     put_backup(df, destination)
