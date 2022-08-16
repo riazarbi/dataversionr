@@ -60,17 +60,17 @@ expect_equal(get_diffs(local_prefix)  %>% filter(diff_timestamp ==max(diff_times
              diff_df)})
 
 
-# summarise_diff
+# summarise_diffs
 if(Sys.getenv("TEST_S3") == "TRUE") {
-test_that("s3 summarise_diff ",{
-  expect_equal(summarise_diff(s3dir)  %>% select(-diff_timestamp) %>% arrange(new),
+test_that("s3 summarise_diffs ",{
+  expect_equal(summarise_diffs(s3dir)  %>% select(-diff_timestamp) %>% arrange(new),
                data.frame(new = c(2L, 5L),
                           deleted = c(2L, NA),
                           modified = c(0L, 0L)))})
 }
 
-test_that("local summarise_diff ",{
-  expect_equal(summarise_diff(local_prefix) %>% select(-diff_timestamp) %>% arrange(new),
+test_that("local summarise_diffs ",{
+  expect_equal(summarise_diffs(local_prefix) %>% select(-diff_timestamp) %>% arrange(new),
                data.frame(new = c(2L, 5L),
                           deleted = c(2L, NA),
                           modified = c(0L, 0L)))})
