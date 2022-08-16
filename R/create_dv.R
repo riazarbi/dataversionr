@@ -1,5 +1,18 @@
 
 
+#' Create dv
+#'
+#' @param df a data frame
+#' @param destination a local directory path or an arrow SubTreeFileSystem
+#' @param key_cols a character vector of column names that constitute a unique key
+#' @param diffed should we store diffs between each dv version?
+#' @param backup_count how many backups should we store?
+#'
+#' @return TRUE
+#' @importFrom diffdfs diffdfs
+#' @export
+#'
+#' @examples
 create_dv <- function(df, destination, key_cols = NA, diffed = TRUE, backup_count = 0L) {
 
   destination <- make_SubTreeFileSystem(destination)

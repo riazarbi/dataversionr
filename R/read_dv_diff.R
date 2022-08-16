@@ -1,5 +1,19 @@
 
 
+#' Read dv diff
+#'
+#' @param destination a local directory path or an arrow SubTreeFileSystem
+#' @param as_of the valid date at which you'd like to read the dv
+#' @param key_cols a character vector of column names that constitute a unique key
+#'
+#' @return a data frame
+#' @importFrom lubridate now with_tz
+#' @importFrom dplyr filter collect arrange across everything last all_of group_by summarise ungroup select
+#' @importFrom magrittr %>%
+#' @importFrom rlang .data
+#' @export
+#'
+#' @examples
 read_dv_diff <- function(destination, as_of, key_cols) {
   if(is.na(as_of)) {
     as_of <- lubridate::now()

@@ -1,3 +1,17 @@
+#' Commit diff
+#'
+#' @param diff_df a data frame. Output off diffdfs::diffdfs.
+#' @param destination a local directory path or an arrow SubTreeFileSystem
+#' @param verbose TRUE /FALSE should the function be chatty?
+#'
+#' @return TRUE
+#' @importFrom lubridate now
+#' @importFrom dplyr select everything as_tibble
+#' @importFrom arrow write_parquet Table read_parquet
+#' @importFrom rlang .data
+#' @export
+#'
+#' @examples
 commit_diff <- function(diff_df,
                         destination,
                         verbose = FALSE) {

@@ -1,5 +1,14 @@
 
 
+#' Destroy dv
+#'
+#' @param destination a local directory path or an arrow SubTreeFileSystem
+#' @param prompt should we ask for manual confirmation?
+#'
+#' @return TRUE
+#' @export
+#'
+#' @examples
 destroy_dv <- function(destination, prompt = TRUE) {
   destination <- make_SubTreeFileSystem(destination)
   metadata <- get_metadata(destination)

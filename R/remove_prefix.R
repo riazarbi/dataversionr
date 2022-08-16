@@ -1,3 +1,13 @@
+#' Remove prefix
+#'
+#' @param destination a local directory path or an arrow SubTreeFileSystem
+#' @param prompt should we ask for user confirmation?
+#'
+#' @return TRUE
+#' @importFrom utils askYesNo
+#' @export
+#'
+#' @examples
 remove_prefix <- function(destination, prompt = TRUE) {
 
   destination <- make_SubTreeFileSystem(destination)

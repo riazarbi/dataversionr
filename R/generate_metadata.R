@@ -1,3 +1,16 @@
+#' Generate metadata
+#'
+#' @param df a data frame to create a dv from
+#' @param destination a local directory path or an arrow SubTreeFileSystem
+#' @param key_cols a character vector of column names that constitute a unique key
+#' @param diffed should we store diffs between each dv version?
+#' @param backup_count how many backups should we store?
+#'
+#' @return a list
+#' @importFrom diffdfs diffdfs
+#' @export
+#'
+#' @examples
 generate_metadata <- function(df,
                               destination,
                               key_cols = NA,

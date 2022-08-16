@@ -1,3 +1,15 @@
+#' Put backup
+#'
+#' @param new_df a data frame
+#' @param destination a local directory path or an arrow SubTreeFileSystem
+#'
+#' @return TRUE
+#' @importFrom lubridate now
+#' @importFrom dplyr mutate
+#' @importFrom arrow write_parquet
+#' @export
+#'
+#' @examples
 put_backup <- function(new_df, destination) {
 
   latest_prefix <- fix_path("backup", destination)

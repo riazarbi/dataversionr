@@ -1,5 +1,20 @@
 
 
+#' Read dv backup
+#'
+#' @param destination a local directory path or an arrow SubTreeFileSystem
+#' @param as_of the valid date at which you'd like to read the dv
+#'
+#' @return
+#' @importFrom lubridate now with_tz as_datetime
+#' @importFrom purrr map_chr
+#' @importFrom tools  file_path_sans_ext
+#' @importFrom dplyr select
+#' @importFrom arrow read_parquet
+#' @importFrom rlang .data
+#' @export
+#'
+#' @examples
 read_dv_backup <- function(destination, as_of) {
   if(is.na(as_of)) {
     as_of <- lubridate::now()
@@ -34,7 +49,7 @@ read_dv_backup <- function(destination, as_of) {
 
   get_path <- fix_path(latest_backup_name, backup_prefix)
 
-  dv <- dplyr::select(arrow::read_parquet(get_path), -backup_timestamp)
+  dv <- dplyr::select(arrow::read_parquet(get_path), -.data$backup_timestamp)
 
   return(dv)
 

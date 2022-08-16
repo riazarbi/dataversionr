@@ -1,5 +1,15 @@
 
 
+#' Make SubTreeFileSystem
+#'
+#' @param destination a local directory path or an arrow SubTreeFileSystem
+#' @param verbose TRUE /FALSE should the function be chatty?
+#'
+#' @return an arrow SubTreeFileSystem
+#' @importFrom arrow LocalFileSystem
+#' @export
+#'
+#' @examples
 make_SubTreeFileSystem <- function(destination,
                                    verbose = FALSE) {
 

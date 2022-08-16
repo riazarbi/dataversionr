@@ -1,3 +1,13 @@
+#' Fix path
+#'
+#' @param path a sub prefix of the destination
+#' @param destination a local directory path or an arrow SubTreeFileSystem
+#' @param verbose TRUE /FALSE should the function be chatty?
+#'
+#' @return an arrow SubTreeFileSystem
+#' @export
+#'
+#' @examples
 fix_path <- function(path,
                      destination,
                      verbose = FALSE) {

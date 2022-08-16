@@ -1,3 +1,12 @@
+#' Put diff stats
+#'
+#' @param destination a local directory path or an arrow SubTreeFileSystem
+#'
+#' @return TRUE
+#' @importFrom arrow write_csv_arrow
+#' @export
+#'
+#' @examples
 put_diff_stats <- function(destination) {
 
   destination <- make_SubTreeFileSystem(destination)

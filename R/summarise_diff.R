@@ -1,3 +1,15 @@
+#' Summarise diff
+#'
+#' @param destination a local directory path or an arrow SubTreeFileSystem
+#'
+#' @return a data frame of diff statistics
+#' @importFrom dplyr collect group_by summarise mutate ungroup
+#' @importFrom tidyr pivot_wider
+#' @importFrom magrittr %>%
+#' @importFrom rlang .data
+#' @export
+#'
+#' @examples
 summarise_diff <- function(destination) {
 
   destination <- make_SubTreeFileSystem(destination)

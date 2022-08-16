@@ -1,3 +1,13 @@
+#' Update dv
+#'
+#' @param df a data frame. Must be structurally identical to the dv.
+#' @param destination a local directory path or an arrow SubTreeFileSystem
+#'
+#' @return TRUE
+#' @importFrom diffdfs diffdfs
+#' @export
+#'
+#' @examples
 update_dv <- function(df, destination) {
   destination <- make_SubTreeFileSystem(destination)
   metadata <- get_metadata(destination)
