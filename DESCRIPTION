@@ -1,12 +1,12 @@
 Package: dataversionr
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Time Versioned Storage of Data Frames
+Version: 0.9.0
 Authors@R: 
     person(given = "Riaz",
            family = "Arbi",
            role = c("aut", "cre"),
            email = "dataversionr@arbidata.com")
-Description: What the package does (one paragraph).
+Description: Create, update, read and delete data frames in time versioned, parquet-backed datasets. Inspect how your data frame has changed over time. Run your analysis against multiple versions of your data frame.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
