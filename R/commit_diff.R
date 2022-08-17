@@ -15,7 +15,6 @@
 commit_diff <- function(diff_df,
                         destination,
                         verbose = FALSE) {
-
   destination <- make_SubTreeFileSystem(destination)
 
   timestamp <- lubridate::now(tzone = "UTC")
@@ -23,7 +22,8 @@ commit_diff <- function(diff_df,
   diff_path <- paste0("diff/", as.numeric(timestamp), ".parquet")
 
   diff_df$diff_timestamp <- timestamp
-  diff_df <- dplyr::select(diff_df, .data$diff_timestamp, dplyr::everything())
+  diff_df <-
+    dplyr::select(diff_df, .data$diff_timestamp, dplyr::everything())
 
 
   if (verbose) {
@@ -36,7 +36,7 @@ commit_diff <- function(diff_df,
   put_location <- fix_path(diff_path, destination)
 
   arrow::write_parquet(diff_df,
-                put_location)
+                       put_location)
 
   if (verbose) {
     message("Verifying diff can be retrieved from dataset...")
@@ -50,7 +50,8 @@ commit_diff <- function(diff_df,
 
   # Table$() method is WORKAROUND FOR https://issues.apache.org/jira/browse/ARROW-16010
   read_check <-
-    identical(dplyr::as_tibble(retrieved_df), arrow::Table$create(diff_df)$to_data_frame())
+    identical(dplyr::as_tibble(retrieved_df),
+              arrow::Table$create(diff_df)$to_data_frame())
   if (verbose & read_check) {
     message("Remote diff is identical to local diff.")
   }

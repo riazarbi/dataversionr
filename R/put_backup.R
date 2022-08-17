@@ -11,7 +11,6 @@
 #'
 #' @examples
 put_backup <- function(new_df, destination) {
-
   latest_prefix <- fix_path("backup", destination)
 
   make_prefix(latest_prefix)
@@ -25,6 +24,6 @@ put_backup <- function(new_df, destination) {
   backup_df <- dplyr::mutate(new_df, backup_timestamp = timestamp)
 
   arrow::write_parquet(backup_df,
-                put_location)
+                       put_location)
   return(TRUE)
 }

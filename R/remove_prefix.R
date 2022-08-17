@@ -9,26 +9,28 @@
 #'
 #' @examples
 remove_prefix <- function(destination, prompt = TRUE) {
-
   destination <- make_SubTreeFileSystem(destination)
 
-  if(!("SubTreeFileSystem" %in% class(destination))) {
-    stop('class(destination) must include the type "SubTreeFileSystem". This avoids wiping entire filesystems!')
+  if (!("SubTreeFileSystem" %in% class(destination))) {
+    stop(
+      'class(destination) must include the type "SubTreeFileSystem". This avoids wiping entire filesystems!'
+    )
   }
 
-  prefix_depth <- length(strsplit(destination$base_path, split = "/")[[1]])
+  prefix_depth <-
+    length(strsplit(destination$base_path, split = "/")[[1]])
 
-  if(prompt) {
+  if (prompt) {
     msg <- paste0("This command will delete ",
-                 destination$base_path)
+                  destination$base_path)
     message(msg)
     proceed <- utils::askYesNo("Continue?", default = FALSE,
-             prompts = gettext(c("y", "N", "cancel")))
+                               prompts = gettext(c("y", "N", "cancel")))
   } else {
     proceed <- TRUE
   }
 
-  if(proceed) {
+  if (proceed) {
     if (destination$base_fs$type_name == "s3" & prefix_depth == 1) {
       destination$base_fs$DeleteDirContents(destination$base_path)
     } else {

@@ -8,7 +8,6 @@
 #'
 #' @examples
 put_diff_stats <- function(destination) {
-
   destination <- make_SubTreeFileSystem(destination)
 
   diff_counts_df <- summarise_diffs(destination)

@@ -8,7 +8,7 @@ Sys.setenv(TZ = "UTC")
 #Sys.setenv(TEST_S3 = TRUE)
 
 # Set up minio for s3 testing ##################################################
-if(Sys.getenv("TEST_S3") == "TRUE") {
+if (Sys.getenv("TEST_S3") == "TRUE") {
   Sys.setenv(
     MINIO_ROOT_USER = "minio",
     MINIO_ROOT_PASSWORD = "password",
@@ -91,10 +91,14 @@ if(Sys.getenv("TEST_S3") == "TRUE") {
 
 
   withr::defer({
-    Sys.unsetenv(c("MINIO_ROOT_USER",
-                   "MINIO_ROOT_PASSWORD",
-                   "AWS_ACCESS_KEY_ID",
-                   "AWS_SECRET_ACCESS_KEY"))
+    Sys.unsetenv(
+      c(
+        "MINIO_ROOT_USER",
+        "MINIO_ROOT_PASSWORD",
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY"
+      )
+    )
   }, teardown_env())
 
 }

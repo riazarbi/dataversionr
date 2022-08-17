@@ -1,5 +1,6 @@
 
 
+
 #' Read dv backup
 #'
 #' @param destination a local directory path or an arrow SubTreeFileSystem
@@ -16,14 +17,16 @@
 #'
 #' @examples
 read_dv_backup <- function(destination, as_of) {
-  if(is.na(as_of)) {
+  if (is.na(as_of)) {
     as_of <- lubridate::now()
   }
 
   as_of <- lubridate::with_tz(as_of, tzone = "UTC")
 
-  if(!("POSIXct" %in% class(as_of))) {
-    stop("parameter as_of must be of class POSIXct. An easy way to create such an object is with lubridate::as_datetime()")
+  if (!("POSIXct" %in% class(as_of))) {
+    stop(
+      "parameter as_of must be of class POSIXct. An easy way to create such an object is with lubridate::as_datetime()"
+    )
   }
 
   backup_prefix <- fix_path("backup", destination)
@@ -31,17 +34,20 @@ read_dv_backup <- function(destination, as_of) {
 
   backup_files <- backup_prefix$ls()
 
-  if(length(backup_files) == 0) {
+  if (length(backup_files) == 0) {
     stop("No backups found in the backup directory. ")
   }
 
-  ordered_backups <- sort(purrr::map_chr(backup_files, ~tools::file_path_sans_ext(.x)), decreasing = TRUE)
+  ordered_backups <-
+    sort(purrr::map_chr(backup_files, ~ tools::file_path_sans_ext(.x)),
+         decreasing = TRUE)
 
-  ordered_backups_dttm <- lubridate::as_datetime(as.numeric(ordered_backups))
+  ordered_backups_dttm <-
+    lubridate::as_datetime(as.numeric(ordered_backups))
 
   older_backups <- ordered_backups[ordered_backups_dttm <= as_of]
 
-  if(length(older_backups) == 0) {
+  if (length(older_backups) == 0) {
     stop("No backups older than the specified as_of date found.")
   }
 
@@ -49,8 +55,9 @@ read_dv_backup <- function(destination, as_of) {
 
   get_path <- fix_path(latest_backup_name, backup_prefix)
 
-  dv <- dplyr::select(arrow::read_parquet(get_path), -.data$backup_timestamp)
+  dv <-
+    dplyr::select(arrow::read_parquet(get_path),-.data$backup_timestamp)
 
   return(dv)
 
-  }
+}
