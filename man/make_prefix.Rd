@@ -15,3 +15,8 @@ silent
 \description{
 Make prefix
 }
+\examples{
+temp_dir <- tempfile()
+make_prefix(temp_dir)
+
+}

@@ -11,6 +11,20 @@ read_dv_backup(destination, as_of)
 
 \item{as_of}{the valid date at which you'd like to read the dv}
 }
+\value{
+a data frame
+}
 \description{
 Read dv backup
+}
+\examples{
+temp_dir <- tempfile()
+dir.create(temp_dir, recursive = TRUE)
+df <- data.frame(a = 1:5, b = letters[1:5])
+create_dv(df, temp_dir, backup_count = 5L)
+
+read_dv_backup(temp_dir, as_of = lubridate::now())
+
+unlink(temp_dir)
+
 }

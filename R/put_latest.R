@@ -8,6 +8,14 @@
 #' @export
 #'
 #' @examples
+#' temp_dir <- tempfile()
+#' dir.create(temp_dir, recursive = TRUE)
+#' df <- data.frame(a = 1:5, b = letters[1:5])
+#'
+#' put_latest(df, temp_dir)
+#'
+#' unlink(temp_dir)
+#'
 put_latest <- function(new_df, destination) {
   latest_prefix <- fix_path("latest", destination)
 

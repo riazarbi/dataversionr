@@ -10,6 +10,14 @@
 #' @export
 #'
 #' @examples
+#' temp_dir <- tempfile()
+#' dir.create(temp_dir, recursive = TRUE)
+#' df <- data.frame(a = 1:5, b = letters[1:5])
+#' put_backup(df, temp_dir)
+#'
+#'
+#' get_backups(temp_dir)
+#'
 get_backups <- function(destination, collect = TRUE) {
   backup_prefix <- fix_path("backup", destination)
 

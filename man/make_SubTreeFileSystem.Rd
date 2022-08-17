@@ -17,3 +17,8 @@ an arrow SubTreeFileSystem
 \description{
 Make SubTreeFileSystem
 }
+\examples{
+temp_dir <- tempfile()
+make_SubTreeFileSystem(temp_dir)
+
+}

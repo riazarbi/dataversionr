@@ -6,6 +6,9 @@
 #' @export
 #'
 #' @examples
+#' temp_dir <- tempfile()
+#' make_prefix(temp_dir)
+#'
 make_prefix <- function(destination) {
   destination <- make_SubTreeFileSystem(destination)
   if (destination$base_fs$type_name == "local") {

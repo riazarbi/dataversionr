@@ -8,6 +8,11 @@
 #' @export
 #'
 #' @examples
+#' temp_dir <- tempfile()
+#' make_prefix(temp_dir)
+#'
+#' remove_prefix(temp_dir, prompt = FALSE)
+#'
 remove_prefix <- function(destination, prompt = TRUE) {
   destination <- make_SubTreeFileSystem(destination)
 

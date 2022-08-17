@@ -8,6 +8,19 @@
 #' @export
 #'
 #' @examples
+#' temp_dir <- tempfile()
+#' dir.create(temp_dir, recursive = TRUE)
+#' df <- data.frame(a = 1:5, b = letters[1:5])
+#' create_dv(df, temp_dir, backup_count = 5L)
+#'
+#' read_dv(temp_dir)
+#'
+#' read_dv(temp_dir, source = "backup")
+#'
+#' read_dv(temp_dir, as_of = lubridate::now(), source = "diffs")
+#'
+#' unlink(temp_dir)
+#'
 read_dv <- function(destination,
                     as_of = NA,
                     source = "latest") {

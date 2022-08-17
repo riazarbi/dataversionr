@@ -6,7 +6,7 @@
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #' @param as_of the valid date at which you'd like to read the dv
 #'
-#' @return
+#' @return a data frame
 #' @importFrom lubridate now with_tz as_datetime
 #' @importFrom purrr map_chr
 #' @importFrom tools  file_path_sans_ext
@@ -16,6 +16,15 @@
 #' @export
 #'
 #' @examples
+#' temp_dir <- tempfile()
+#' dir.create(temp_dir, recursive = TRUE)
+#' df <- data.frame(a = 1:5, b = letters[1:5])
+#' create_dv(df, temp_dir, backup_count = 5L)
+#'
+#' read_dv_backup(temp_dir, as_of = lubridate::now())
+#'
+#' unlink(temp_dir)
+#'
 read_dv_backup <- function(destination, as_of) {
   if (is.na(as_of)) {
     as_of <- lubridate::now()

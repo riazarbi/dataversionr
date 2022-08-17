@@ -17,3 +17,10 @@ TRUE
 \description{
 Remove prefix
 }
+\examples{
+temp_dir <- tempfile()
+make_prefix(temp_dir)
+
+remove_prefix(temp_dir, prompt = FALSE)
+
+}

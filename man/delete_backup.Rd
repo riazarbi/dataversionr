@@ -19,3 +19,18 @@ TRUE
 \description{
 Delete backup
 }
+\examples{
+temp_dir <- tempfile()
+dir.create(temp_dir, recursive = TRUE)
+df <- data.frame(a = 1:5, b = letters[1:5])
+for(i in 1:10) {put_backup(df, temp_dir)}
+
+# before
+list.files(file.path(temp_dir, "backup"))
+
+delete_backup(temp_dir, 4L)
+
+# after
+list.files(file.path(temp_dir, "backup"))
+
+}

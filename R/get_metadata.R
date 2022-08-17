@@ -12,6 +12,16 @@
 #' @export
 #'
 #' @examples
+#' temp_dir <- tempfile()
+#' dir.create(temp_dir, recursive = TRUE)
+#' df <- data.frame(a = 1:5, b = letters[1:5])
+#' md <- generate_metadata(df, temp_dir)
+#' put_metadata(md, temp_dir)
+#'
+#' get_metadata(temp_dir)
+#'
+#' unlink(temp_dir)
+#'
 get_metadata <- function(destination, verbose = FALSE) {
   get_path <- fix_path("metadata.csv", destination, verbose = verbose)
   df <- arrow::read_csv_arrow(

@@ -8,6 +8,11 @@
 #' @export
 #'
 #' @examples
+#' temp_dir <- tempfile()
+#' dir.create(temp_dir, recursive = TRUE)
+#'
+#' fix_path("backup", temp_dir)
+#'
 fix_path <- function(path,
                      destination,
                      verbose = FALSE) {

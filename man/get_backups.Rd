@@ -17,3 +17,13 @@ an arrow dataset
 \description{
 Get backups
 }
+\examples{
+temp_dir <- tempfile()
+dir.create(temp_dir, recursive = TRUE)
+df <- data.frame(a = 1:5, b = letters[1:5])
+put_backup(df, temp_dir)
+
+
+get_backups(temp_dir)
+
+}

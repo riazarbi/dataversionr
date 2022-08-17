@@ -8,6 +8,14 @@
 #' @export
 #'
 #' @examples
+#' temp_dir <- tempfile()
+#' dir.create(temp_dir, recursive = TRUE)
+#' df <- data.frame(a = 1:5, b = letters[1:5])
+#' new_df <- data.frame(a = 2:5, b = letters[2:5])
+#' create_dv(df, temp_dir)
+#'
+#' update_dv(new_df, temp_dir)
+#'
 update_dv <- function(df, destination) {
   destination <- make_SubTreeFileSystem(destination)
   metadata <- get_metadata(destination)

@@ -19,3 +19,10 @@ an arrow SubTreeFileSystem
 \description{
 Fix path
 }
+\examples{
+temp_dir <- tempfile()
+dir.create(temp_dir, recursive = TRUE)
+
+fix_path("backup", temp_dir)
+
+}

@@ -19,3 +19,13 @@ TRUE
 \description{
 Put metadata
 }
+\examples{
+temp_dir <- tempfile()
+dir.create(temp_dir, recursive = TRUE)
+df <- data.frame(a = 1:5, b = letters[1:5])
+md <- generate_metadata(df, temp_dir)
+
+put_metadata(md, temp_dir)
+unlink(temp_dir)
+
+}

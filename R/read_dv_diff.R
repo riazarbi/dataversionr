@@ -15,6 +15,17 @@
 #' @export
 #'
 #' @examples
+#' temp_dir <- tempfile()
+#' dir.create(temp_dir, recursive = TRUE)
+#' df <- data.frame(a = 1:5, b = letters[1:5])
+#' create_dv(df, temp_dir, diffed = TRUE)
+#'
+#' read_dv_diff(temp_dir,
+#'              as_of = lubridate::now(),
+#'              key_cols = get_metadata(temp_dir)$key_cols)
+#'
+#' unlink(temp_dir)
+#'
 read_dv_diff <- function(destination, as_of, key_cols) {
   if (is.na(as_of)) {
     as_of <- lubridate::now()

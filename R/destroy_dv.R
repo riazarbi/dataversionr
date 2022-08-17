@@ -10,6 +10,15 @@
 #' @export
 #'
 #' @examples
+#' temp_dir <- tempfile()
+#' dir.create(temp_dir, recursive = TRUE)
+#' df <- data.frame(a = 1:5, b = letters[1:5])
+#'
+#' create_dv(df, temp_dir)
+#' destroy_dv(temp_dir, prompt = FALSE)
+#'
+#' unlink(temp_dir)
+#'
 destroy_dv <- function(destination, prompt = TRUE) {
   destination <- make_SubTreeFileSystem(destination)
   metadata <- get_metadata(destination)

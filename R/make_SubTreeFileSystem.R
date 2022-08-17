@@ -11,6 +11,9 @@
 #' @export
 #'
 #' @examples
+#' temp_dir <- tempfile()
+#' make_SubTreeFileSystem(temp_dir)
+#'
 make_SubTreeFileSystem <- function(destination,
                                    verbose = FALSE) {
   target_classes <-
