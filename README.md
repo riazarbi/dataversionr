@@ -7,7 +7,9 @@ This package is not yet on CRAN. Install from github with `devtools::install_git
 
 ## Using
 
-This package allows you create, read, update and destroy time-versioned arrow datasets at arrow SubTreeFileSystems. At this time, arrow supports local disk and remote S3 API-compatibile endpoints as FileSystems.
+This package allows you create, read, update and destroy time versioned datasets at `arrow` SubTreeFileSystem locations. 
+
+At this time, `arrow` supports local disk, S3 API-compatible, and GCS endpoints as FileSystems. Our test suite only runs against local and S3 FileSystems but there is no reason a GCS endpoint should work any differently.
 
 The most high-level functions in this package are intended to introduce as little additional overhead as possible over base `R` `read`, `write` and `unlink` functions:
 
