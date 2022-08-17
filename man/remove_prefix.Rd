@@ -15,7 +15,7 @@ remove_prefix(destination, prompt = TRUE)
 TRUE
 }
 \description{
-Remove prefix
+Remove all the contents of a subdirectory or SubTreeFileSystem
 }
 \examples{
 temp_dir <- tempfile()

@@ -15,7 +15,7 @@ put_latest(new_df, destination)
 TRUE
 }
 \description{
-Put latest
+Write a new latest version to a versioned dataset. Does not update diffs or backups.
 }
 \examples{
 temp_dir <- tempfile()

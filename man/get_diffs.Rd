@@ -15,7 +15,7 @@ get_diffs(destination, collect = TRUE)
 a data frame or an arrow dataset connection
 }
 \description{
-Get diffs
+Read in all the diffs in a versioned dataset to a data frame or arrow dataset
 }
 \examples{
 temp_dir <- tempfile()

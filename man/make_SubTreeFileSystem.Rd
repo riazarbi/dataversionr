@@ -15,7 +15,7 @@ make_SubTreeFileSystem(destination, verbose = FALSE)
 an arrow SubTreeFileSystem
 }
 \description{
-Make SubTreeFileSystem
+Turn a local file path string or a SubTreeFileSystem into a SubTreeFileSystem
 }
 \examples{
 temp_dir <- tempfile()

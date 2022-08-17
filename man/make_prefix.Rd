@@ -13,7 +13,7 @@ make_prefix(destination)
 silent
 }
 \description{
-Make prefix
+Create the necessary subdirectories to make sure that SubTreeFileSystem methods will work.
 }
 \examples{
 temp_dir <- tempfile()

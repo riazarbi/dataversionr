@@ -15,7 +15,7 @@ update_dv(df, destination)
 TRUE
 }
 \description{
-Update dv
+Update a versioned dataset with a new version of the data.
 }
 \examples{
 temp_dir <- tempfile()

@@ -17,7 +17,7 @@ fix_path(path, destination, verbose = FALSE)
 an arrow SubTreeFileSystem
 }
 \description{
-Fix path
+Take a prefix and a local file path or SubTreeFileSystem and return the correct SubTreeFileSystem. A bit like file.path for arrow SubTreeFileSystems.
 }
 \examples{
 temp_dir <- tempfile()

@@ -17,7 +17,7 @@ read_dv(destination, as_of = NA, source = "latest")
 a data frame
 }
 \description{
-Read dv
+Read a version of a versioned dataset into a data frame
 }
 \examples{
 temp_dir <- tempfile()

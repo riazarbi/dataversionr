@@ -15,7 +15,7 @@ get_latest(destination, collect = TRUE)
 a data frame or an arrow dataset
 }
 \description{
-Get latest
+Read in the latest version of a versioned dataset to a data frame
 }
 \examples{
 temp_dir <- tempfile()

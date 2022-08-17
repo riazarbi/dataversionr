@@ -27,7 +27,7 @@ generate_metadata(
 a list
 }
 \description{
-Generate metadata
+Generate a conformant metadata structure for a versioned dataset
 }
 \examples{
 temp_dir <- tempfile()

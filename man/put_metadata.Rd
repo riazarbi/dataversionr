@@ -17,7 +17,7 @@ put_metadata(metadata, destination, verbose = FALSE)
 TRUE
 }
 \description{
-Put metadata
+Write versioned dataset metadata to a destination.
 }
 \examples{
 temp_dir <- tempfile()

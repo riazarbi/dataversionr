@@ -17,7 +17,7 @@ read_dv_diff(destination, as_of, key_cols)
 a data frame
 }
 \description{
-Read dv diff
+Read a version of a versioned dataset into a data frame using just the stored diffs.
 }
 \examples{
 temp_dir <- tempfile()

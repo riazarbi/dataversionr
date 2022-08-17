@@ -13,7 +13,7 @@ get_diff_stats(destination)
 a data frame
 }
 \description{
-Get diff stats
+Read a versioned dataset's diff statistics to a data frame
 }
 \examples{
 temp_dir <- tempfile()

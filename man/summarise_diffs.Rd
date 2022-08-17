@@ -13,7 +13,7 @@ summarise_diffs(destination)
 a data frame of diff statistics
 }
 \description{
-Summarise diffs
+Create a data frame which summarises the diffs in a versioned dataset
 }
 \examples{
 temp_dir <- tempfile()

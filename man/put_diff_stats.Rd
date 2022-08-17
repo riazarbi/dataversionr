@@ -13,7 +13,7 @@ put_diff_stats(destination)
 TRUE
 }
 \description{
-Put diff stats
+Write diff statistics to a versioned dataset
 }
 \examples{
 temp_dir <- tempfile()

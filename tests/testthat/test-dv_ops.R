@@ -135,7 +135,9 @@ test_that("local read_dv latest timestmap error",
             "parameter latest only works with parameter as_of set to NA.")
           })
 
-
+# Adding to handle https://issues.apache.org/jira/browse/ARROW-16421 ##
+gc()
+#######################################################################
 
 test_that("local destroy_dv",
           {

@@ -15,7 +15,7 @@ read_dv_backup(destination, as_of)
 a data frame
 }
 \description{
-Read dv backup
+Read a version of a versioned dataset into a data frame using just the stored backups
 }
 \examples{
 temp_dir <- tempfile()

@@ -17,7 +17,7 @@ commit_diff(diff_df, destination, verbose = FALSE)
 TRUE
 }
 \description{
-Commit diff
+Write a diff to a versioned dataset destination. Check that it was written correctly, otherwise return an error.
 }
 \examples{
 temp_dir <- tempfile()

@@ -15,7 +15,7 @@ put_backup(new_df, destination)
 TRUE
 }
 \description{
-Put backup
+Write a data frame to the backup section of a versioned dataset
 }
 \examples{
 temp_dir <- tempfile()

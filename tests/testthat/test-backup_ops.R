@@ -88,6 +88,11 @@ prefix_path <- make_SubTreeFileSystem(prefix_path)
 
 prior_backups <- prefix_path$ls()
 
+# Adding to handle https://issues.apache.org/jira/browse/ARROW-16421 ##
+gc()
+#######################################################################
+
+
 test_that("local_prefix delete backup",
           {
             expect_true({
@@ -96,6 +101,11 @@ test_that("local_prefix delete backup",
           })
 
 local_post_backups <- prefix_path$ls()
+
+# Adding to handle https://issues.apache.org/jira/browse/ARROW-16421 ##
+gc()
+#######################################################################
+
 
 test_that("local_prefix delete backup verify",
           {

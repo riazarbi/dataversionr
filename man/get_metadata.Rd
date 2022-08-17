@@ -15,7 +15,7 @@ get_metadata(destination, verbose = FALSE)
 a list
 }
 \description{
-Get metadata
+Read versioned dataset metadata to a list
 }
 \examples{
 temp_dir <- tempfile()

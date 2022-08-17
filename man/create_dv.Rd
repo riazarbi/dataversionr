@@ -21,7 +21,7 @@ create_dv(df, destination, key_cols = NA, diffed = TRUE, backup_count = 0L)
 TRUE
 }
 \description{
-Create dv
+Create a versioned dataset
 }
 \examples{
 temp_dir <- tempfile()

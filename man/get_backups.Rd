@@ -15,7 +15,7 @@ get_backups(destination, collect = TRUE)
 an arrow dataset
 }
 \description{
-Get backups
+Read the backups in a versioned dataset to a data frame or an arrow dataset
 }
 \examples{
 temp_dir <- tempfile()
