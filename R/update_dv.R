@@ -1,5 +1,7 @@
 #' Update dv
 #'
+#' Update a versioned dataset with a new version of the data.
+#'
 #' @param df a data frame. Must be structurally identical to the dv.
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #'

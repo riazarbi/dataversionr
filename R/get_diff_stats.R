@@ -1,5 +1,7 @@
 #' Get diff stats
 #'
+#' Read a versioned dataset's diff statistics to a data frame
+#'
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #'
 #' @return a data frame

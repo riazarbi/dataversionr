@@ -1,5 +1,7 @@
 #' Put backup
 #'
+#' Write a data frame to the backup section of a versioned dataset
+#'
 #' @param new_df a data frame
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #'

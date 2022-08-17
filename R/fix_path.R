@@ -1,5 +1,7 @@
 #' Fix path
 #'
+#' Take a prefix and a local file path or SubTreeFileSystem and return the correct SubTreeFileSystem. A bit like file.path for arrow SubTreeFileSystems.
+#'
 #' @param path a sub prefix of the destination
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #' @param verbose TRUE /FALSE should the function be chatty?

@@ -1,5 +1,7 @@
 #' Delete backup
 #'
+#' Delete backups after a particular position in a versioned dataset
+#'
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #' @param after_position how many backups should we leave in the dv?
 #' @param verbose TRUE /FALSE should the function be chatty?

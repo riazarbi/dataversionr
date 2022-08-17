@@ -1,5 +1,7 @@
 #' Get backups
 #'
+#' Read the backups in a versioned dataset to a data frame or an arrow dataset
+#'
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 
 #' @param collect should we collect the underlying arrow dataset or return just the connection?

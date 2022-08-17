@@ -1,5 +1,7 @@
 #' Commit diff
 #'
+#' Write a diff to a versioned dataset destination. Check that it was written correctly, otherwise return an error.
+#'
 #' @param diff_df a data frame. Output off diffdfs::diffdfs.
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #' @param verbose TRUE /FALSE should the function be chatty?

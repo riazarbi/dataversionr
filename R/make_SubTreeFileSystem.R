@@ -3,6 +3,8 @@
 
 #' Make SubTreeFileSystem
 #'
+#' Turn a local file path string or a SubTreeFileSystem into a SubTreeFileSystem
+#'
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #' @param verbose TRUE /FALSE should the function be chatty?
 #'

@@ -1,5 +1,7 @@
 #' Make prefix
 #'
+#' Create the necessary subdirectories to make sure that SubTreeFileSystem methods will work.
+#'
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #'
 #' @return silent

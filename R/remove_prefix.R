@@ -1,5 +1,7 @@
 #' Remove prefix
 #'
+#' Remove all the contents of a subdirectory or SubTreeFileSystem
+#'
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #' @param prompt should we ask for user confirmation?
 #'

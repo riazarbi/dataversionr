@@ -1,5 +1,7 @@
 #' Put diff stats
 #'
+#' Write diff statistics to a versioned dataset
+#'
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #'
 #' @return TRUE

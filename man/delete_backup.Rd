@@ -17,7 +17,7 @@ delete_backup(destination, after_position, verbose = FALSE)
 TRUE
 }
 \description{
-Delete backup
+Delete backups after a particular position in a versioned dataset
 }
 \examples{
 temp_dir <- tempfile()

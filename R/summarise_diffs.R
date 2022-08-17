@@ -1,5 +1,7 @@
 #' Summarise diffs
 #'
+#' Create a data frame which summarises the diffs in a versioned dataset
+#'
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #'
 #' @return a data frame of diff statistics

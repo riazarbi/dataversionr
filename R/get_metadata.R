@@ -3,6 +3,8 @@
 
 #' Get metadata
 #'
+#' Read versioned dataset metadata to a list
+#'
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #' @param verbose TRUE /FALSE should the function be chatty?
 #'

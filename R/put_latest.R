@@ -1,5 +1,7 @@
 #' Put latest
 #'
+#' Write a new latest version to a versioned dataset. Does not update diffs or backups.
+#'
 #' @param new_df a dataframe
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #'

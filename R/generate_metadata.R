@@ -1,5 +1,7 @@
 #' Generate metadata
 #'
+#' Generate a conformant metadata structure for a versioned dataset
+#'
 #' @param df a data frame to create a dv from
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #' @param key_cols a character vector of column names that constitute a unique key

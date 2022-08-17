@@ -1,5 +1,7 @@
 #' Read dv
 #'
+#' Read a version of a versioned dataset into a data frame
+#'
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #' @param as_of the valid date at which you'd like to read the dv
 #' @param source the source of the dv. Options are 'latest', 'diffs' or 'backup'

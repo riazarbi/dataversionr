@@ -1,5 +1,7 @@
 #' Get latest
 #'
+#' Read in the latest version of a versioned dataset to a data frame
+#'
 #' @param destination a local directory path or an arrow SubTreeFileSystem
 #' @param collect should we return a data frame (TRUE) or an arrow dataset connection (FALSE)
 #'
