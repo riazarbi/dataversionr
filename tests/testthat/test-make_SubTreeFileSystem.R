@@ -3,13 +3,13 @@
 # tests ------------------------------------------------------------------------
 # test correct object works
 test_that("existing SubTreeFileSystem works", {
-  expect_equal({make_SubTreeFileSystem(arrow::LocalFileSystem$create()$cd("/tmp"))$base_path},
-               make_SubTreeFileSystem(arrow::LocalFileSystem$create()$cd("/tmp"))$base_path)
+  expect_equal({make_SubTreeFileSystem(arrow::LocalFileSystem$create()$cd(tempdir()))$base_path},
+               make_SubTreeFileSystem(arrow::LocalFileSystem$create()$cd(tempdir()))$base_path)
 })
 
 # test correct object works verbose
 test_that("existing SubTreeFileSystem works VERBOSE", {
-  expect_message({make_SubTreeFileSystem(arrow::LocalFileSystem$create()$cd("/tmp"), verbose = TRUE)},
+  expect_message({make_SubTreeFileSystem(arrow::LocalFileSystem$create()$cd(tempdir()), verbose = TRUE)},
                "destination parameter has the required class structure.")
 })
 

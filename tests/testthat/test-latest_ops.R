@@ -13,7 +13,7 @@ new_df[3, 2] <- "update"
 test_that("local get latest",
           {expect_error({
             get_latest(local_prefix)
-          }, "No such file or directory")})
+          })})
 
 test_that("local put latest",
           {expect_true({

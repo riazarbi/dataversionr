@@ -6,7 +6,6 @@ all_df$dttm <- lubridate::as_datetime(as.character(all_df$date))
 all_df$dt <- lubridate::as_datetime(as.character(all_df$date))
 all_df$fct <- as.factor(all_df$game_type)
 all_df$key1 <- seq(1:nrow(all_df))
-glimpse(all_df)
 all_df$key2 <- all_df$fct
 
 old_df <- all_df[1:5,]

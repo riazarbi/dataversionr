@@ -11,7 +11,7 @@ new_df[3, 2] <- "g"
 test_that("local get backup",
           {expect_error({
             get_backups(local_prefix)
-          }, "No such file or directory")})
+          })})
 
 test_that("local put backup",
           {expect_true({

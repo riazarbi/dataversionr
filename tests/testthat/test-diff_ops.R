@@ -9,7 +9,7 @@ diff_df <- diffdfs::diffdfs(new_df, old_df, key_cols = c("a", "b"))
 newer_diff_df <- diffdfs::diffdfs(newer_df, new_df, key_cols = c("a", "b"))
 
 # Clean out prefixes
-local_prefix <- "/tmp/dataversionr-tests/"
+local_prefix <- tempfile()
 unlink(local_prefix, recursive = TRUE)
 if(Sys.getenv("TEST_S3") == "TRUE") {
 s3$DeleteDirContents("dataversionr-tests/")

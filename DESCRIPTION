@@ -25,5 +25,6 @@ Suggests:
     testthat (>= 3.0.0),
     withr,
     sys,
-    aws.s3
+    aws.s3,
+    tzdb
 Config/testthat/edition: 3
