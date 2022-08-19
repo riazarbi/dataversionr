@@ -3,7 +3,9 @@ Create and maintain time-versioned datasets using `arrow`.
 
 ## Installing
 
-This package is not yet on CRAN. Install from github with `devtools::install_github("riazarbi/dataversionr")`.
+Install via CRAN with `install.packages("dataversionr")`
+
+Install from github with `devtools::install_github("riazarbi/dataversionr")`.
 
 ## Using
 
