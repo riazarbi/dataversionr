@@ -11,8 +11,8 @@
 #' temp_dir <- tempfile()
 #' make_prefix(temp_dir)
 #'
-make_prefix <- function(destination) {
-  destination <- make_SubTreeFileSystem(destination)
+make_prefix <- function(destination, verbose = FALSE) {
+  destination <- make_SubTreeFileSystem(destination, verbose = verbose)
   if (destination$base_fs$type_name == "local") {
     destination$CreateDir("/", recursive = TRUE)
   }

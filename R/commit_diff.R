@@ -27,7 +27,7 @@
 commit_diff <- function(diff_df,
                         destination,
                         verbose = FALSE) {
-  destination <- make_SubTreeFileSystem(destination)
+  destination <- make_SubTreeFileSystem(destination, verbose = verbose)
 
   timestamp <- lubridate::now(tzone = "UTC")
 

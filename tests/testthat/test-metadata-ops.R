@@ -168,7 +168,7 @@ if (Sys.getenv("TEST_S3") == "TRUE") {
   test_that("put_metadata s3",
             {
               expect_true({
-                put_metadata(s3meta, s3dir, verbose = TRUE)
+                put_metadata(s3meta, s3dir, verbose = FALSE)
               })
             })
 }
@@ -185,7 +185,7 @@ local_meta <- generate_metadata(
 test_that("put_metadata local",
           {
             expect_true({
-              put_metadata(local_meta, local_prefix, verbose = TRUE)
+              put_metadata(local_meta, local_prefix, verbose = FALSE)
             })
           })
 
@@ -194,7 +194,7 @@ if (Sys.getenv("TEST_S3") == "TRUE") {
   test_that("get_metadata s3",
             {
               expect_equal({
-                get_metadata(s3dir, verbose = TRUE)
+                get_metadata(s3dir, verbose = FALSE)
               },
               s3meta)
             })
@@ -204,7 +204,7 @@ if (Sys.getenv("TEST_S3") == "TRUE") {
 test_that("get_metadata local",
           {
             expect_equal({
-              get_metadata(local_prefix, verbose = TRUE)
+              get_metadata(local_prefix, verbose = FALSE)
             },
             local_meta)
           })

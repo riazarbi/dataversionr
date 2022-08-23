@@ -24,7 +24,7 @@ if (Sys.getenv("TEST_S3") == "TRUE") {
             {
               expect_true(commit_diff(first_diff,
                                       s3dir,
-                                      verbose = TRUE))
+                                      verbose = FALSE))
             })
 }
 
@@ -32,7 +32,7 @@ test_that("local commit diff works",
           {
             expect_true(commit_diff(first_diff,
                                     local_prefix,
-                                    verbose = TRUE))
+                                    verbose = FALSE))
           })
 
 # commit_diff diff 2
@@ -41,7 +41,7 @@ if (Sys.getenv("TEST_S3") == "TRUE") {
             {
               expect_true(commit_diff(diff_df,
                                       s3dir,
-                                      verbose = TRUE))
+                                      verbose = FALSE))
             })
 }
 
@@ -49,7 +49,7 @@ test_that("local commit diff works",
           {
             expect_true(commit_diff(diff_df,
                                     local_prefix,
-                                    verbose = TRUE))
+                                    verbose = FALSE))
           })
 
 

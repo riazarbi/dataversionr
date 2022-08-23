@@ -26,7 +26,8 @@ generate_metadata <- function(df,
                               destination,
                               key_cols = NA,
                               diffed = TRUE,
-                              backup_count = 0L) {
+                              backup_count = 0L,
+                              verbose = FALSE) {
   # versioning
   schema_ver = "20220727"
 
@@ -56,9 +57,13 @@ generate_metadata <- function(df,
   }
 
   if (diffed) {
-    message("Checking that new_df can be diffed...")
+    if(verbose) {
+      message("Checking that new_df can be diffed...")
+    }
     if (is.data.frame(diffdfs::diffdfs(df, key_cols = key_cols))) {
-      message("Diff test passed.")
+      if(verbose) {
+        message("Diff test passed.")
+      }
     } else {
       stop("Diff test failed. Make sure your dataframe can be diffed or set diffed = FALSE")
     }

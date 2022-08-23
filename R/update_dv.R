@@ -18,7 +18,7 @@
 #'
 #' update_dv(new_df, temp_dir)
 #'
-update_dv <- function(df, destination) {
+update_dv <- function(df, destination, verbose = FALSE) {
   destination <- make_SubTreeFileSystem(destination)
   metadata <- get_metadata(destination)
   key_cols <- metadata$key_cols
@@ -30,7 +30,9 @@ update_dv <- function(df, destination) {
   if (nrow(diff) > 0) {
     commit_diff(diff, destination)
   } else {
-    message("No changes detected. Exiting.")
+    if(verbose) {
+      message("No changes detected. Exiting.")
+    }
     return(FALSE)
   }
 

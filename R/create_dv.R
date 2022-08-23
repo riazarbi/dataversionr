@@ -29,7 +29,9 @@ create_dv <-
            destination,
            key_cols = NA,
            diffed = TRUE,
-           backup_count = 0L) {
+           backup_count = 0L,
+           verbose = FALSE) {
+
     destination <- make_SubTreeFileSystem(destination)
     make_prefix(destination)
     if (length(destination$ls()) != 0) {
@@ -45,14 +47,15 @@ create_dv <-
       destination,
       key_cols = key_cols,
       diffed = diffed,
-      backup_count = backup_count
+      backup_count = backup_count,
+      verbose = verbose
     )
 
     put_metadata(metadata, destination)
 
     if (diffed) {
-      diff <- diffdfs::diffdfs(df, NA, key_cols = key_cols)
-      commit_diff(diff, destination)
+      diff <- diffdfs::diffdfs(df, NA, key_cols = key_cols, verbose = verbose)
+      commit_diff(diff, destination, verbose = verbose)
     }
 
     put_latest(df, destination)
